@@ -2,7 +2,50 @@ class Ride < ActiveRecord::Base
   belongs_to :attraction
   belongs_to :user
 
-  validates_presence_of :attraction, :user
+  # validates_presence_of :attraction, :user
+
+  NO_DICE = [
+              " You are not tall enough ", 
+              " You do not have enough tickets "
+             ]
+  
+
+  def take_ride
+# binding.pry
+    @messages="Sorry."
+    can_afford
+    tall_enough
+    if @messages.empty?
+      ride_my_pony
+    else
+      @messages
+    end
+  end
+ 
+
+  def ride_my_pony
+    rider.tickets -= ride.tickets
+    rider.nausea += ride.nausea_rating
+    rider.happiness += ride.happiness_rating 
+  end
+
+  def tall_enough
+    ride.min_height < rider.height ? @messages : @messages << NO_DICE[0] << "to ride the #{ride.name}."
+  end
+
+  def can_afford
+    rider.tickets - ride.tickets >= 0 ? @messages : @messages << NO_DICE[1] << "to ride the #{ride.name}."
+  end
+
+
+  def rider
+    self.user
+  end
+
+  def ride
+    self.attraction
+  end
+
 end
 
 
@@ -11,7 +54,7 @@ end
   def take_ride
     #controller action creates a ride object from params
     #calls this method on that object
-    #tix: self.attraction.tickets, self.user.tickets
+    #tix: attraction.tickets, self.user.tickets
     #1. first checks tix
     #2. checks height
     #3. makes updates
