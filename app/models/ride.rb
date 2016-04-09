@@ -5,20 +5,19 @@ class Ride < ActiveRecord::Base
   # validates_presence_of :attraction, :user
 
   NO_DICE = [
-              " You are not tall enough ", 
-              " You do not have enough tickets "
+              "You are not tall enough", 
+              "You do not have enough tickets"
              ]
   
 
   def take_ride
-# binding.pry
-    @messages="Sorry."
+    @messages=[]
     can_afford
     tall_enough
     if @messages.empty?
       ride_my_pony
     else
-      @messages
+      "Sorry. #{@messages.join(" ")}"
     end
   end
  
@@ -27,14 +26,15 @@ class Ride < ActiveRecord::Base
     rider.tickets -= ride.tickets
     rider.nausea += ride.nausea_rating
     rider.happiness += ride.happiness_rating 
+    rider.save
   end
 
   def tall_enough
-    ride.min_height < rider.height ? @messages : @messages << NO_DICE[0] << "to ride the #{ride.name}."
+    ride.min_height < rider.height ? @messages : @messages << "#{NO_DICE[0]} to ride the #{ride.name}."
   end
 
   def can_afford
-    rider.tickets - ride.tickets >= 0 ? @messages : @messages << NO_DICE[1] << "to ride the #{ride.name}."
+    rider.tickets - ride.tickets >= 0 ? @messages : @messages << "#{NO_DICE[1]} to ride the #{ride.name}."
   end
 
 
