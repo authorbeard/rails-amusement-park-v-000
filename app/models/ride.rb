@@ -2,8 +2,6 @@ class Ride < ActiveRecord::Base
   belongs_to :attraction
   belongs_to :user
 
-  # validates_presence_of :attraction, :user
-
   NO_DICE = [
               "You are not tall enough", 
               "You do not have enough tickets"
