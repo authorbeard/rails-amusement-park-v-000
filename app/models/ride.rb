@@ -2,11 +2,6 @@ class Ride < ActiveRecord::Base
   belongs_to :attraction
   belongs_to :user
 
-  NO_DICE = [
-              "You are not tall enough", 
-              "You do not have enough tickets"
-             ]
-  
 
   def take_ride
     @messages=[]
@@ -28,11 +23,11 @@ class Ride < ActiveRecord::Base
   end
 
   def tall_enough
-    ride.min_height < rider.height ? @messages : @messages << "#{NO_DICE[0]} to ride the #{ride.name}."
+    ride.min_height <= rider.height ? @messages : @messages << "You are not tall enough to ride the #{ride.name}."
   end
 
   def can_afford
-    rider.tickets - ride.tickets >= 0 ? @messages : @messages << "#{NO_DICE[1]} to ride the #{ride.name}."
+    rider.tickets >= ride.tickets ? @messages : @messages << "You do not have enough tickets to ride the #{ride.name}."
   end
 
 
@@ -45,18 +40,3 @@ class Ride < ActiveRecord::Base
   end
 
 end
-
-
-
-=begin
-  def take_ride
-    #controller action creates a ride object from params
-    #calls this method on that object
-    #tix: attraction.tickets, self.user.tickets
-    #1. first checks tix
-    #2. checks height
-    #3. makes updates
-    #4. return value: message or ?
-
-  end
-=end
