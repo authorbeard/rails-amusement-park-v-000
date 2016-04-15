@@ -29,11 +29,12 @@
       </div>
     </div>
 
+    <div class="messages">
+       <%= render 'layouts/messages' %>
+    </div>
     <!-- content -->
 
     <div class="container"  role="main">
-    <%= render 'layouts/messages' %>
-
       <%= yield %>
     </div>
 

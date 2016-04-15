@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
   def destroy
 # binding.pry
     session.delete(:user_id)
-    redirect_to root_path
+    redirect_to root_path, :notice=>"So long, schmuck."
   end
 
   private

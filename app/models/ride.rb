@@ -15,7 +15,7 @@ class Ride < ActiveRecord::Base
     if @messages.empty?
       ride_my_pony
     else
-      "Sorry. #{@messages.join(" ")}"
+      "Sorry. " << @messages.join(" ")
     end
   end
  

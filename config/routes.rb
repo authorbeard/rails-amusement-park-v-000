@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   post 'sessions/create'
   delete 'sessions/destroy', to: "sessions#destroy", as: 'signout'
   resources :attractions, :users 
-  post 'attractions/:id/', to: "attractions#ride", as: "ride"
+  post 'users/:id/', to: "users#ride", as: "ride"
 
 end
