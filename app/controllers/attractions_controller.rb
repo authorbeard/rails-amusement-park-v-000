@@ -14,7 +14,6 @@ class AttractionsController < ApplicationController
   end
 
   def create
-# binding.pry
     @attraction=Attraction.new(attraction_params)
     if @attraction.save
       redirect_to attraction_path(@attraction)
